@@ -50,13 +50,29 @@ function editDrink(req, res) {
 
 function deleteDrink(req, res) {
     db.query(
-        "DELETE FROM drinks WHERE id = ?",
+        "SELECT * FROM cocktails WHERE drink_id = ?",
         [req.params.id],
         (err, results) => {
             if (err) {
-                res.status(500).json({ msg: "Error deleting drink" });
+                res.status(500).json({ msg: "Error getting cocktails" });
+            } else if (results.length > 0) {
+                res.status(400).json({
+                    msg: "Cannot delete drink, it is used in a cocktail",
+                });
             } else {
-                res.json({ msg: "Drink deleted" });
+                db.query(
+                    "DELETE FROM drinks WHERE id = ?",
+                    [req.params.id],
+                    (err, results) => {
+                        if (err) {
+                            res.status(500).json({
+                                msg: "Error deleting drink",
+                            });
+                        } else {
+                            res.json({ msg: "Drink deleted" });
+                        }
+                    }
+                );
             }
         }
     );

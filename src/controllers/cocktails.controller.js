@@ -20,7 +20,7 @@ function newCocktail(req, res) {
     }
     db.query(
         "INSERT INTO cocktails (name, icon, recipe) VALUES (?, ?, ?)",
-        [name, icon, recipe.stringify()],
+        [name, icon, JSON.stringify(recipe)],
         (err) => {
             if (err) {
                 res.status(500).json({ msg: "Error adding cocktail" });
@@ -41,7 +41,7 @@ function editCocktail(req, res) {
     }
     db.query(
         "UPDATE cocktails SET name = ?, icon = ?, recipe = ? WHERE id = ?",
-        [name, icon, recipe.stringify(), req.params.id],
+        [name, icon, JSON.stringify(recipe), req.params.id],
         (err, results) => {
             if (err) {
                 res.status(500).json({ msg: "Error editing cocktail" });

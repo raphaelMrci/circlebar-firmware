@@ -6,18 +6,14 @@ const bodyParser = require("body-parser");
 
 const { initSlots } = require("./middleware/init");
 
-const { login, admin, drinks, cocktails, slots } = require("./routes");
+const router = require("./routes");
 
 initSlots();
 
 app.use(express.static("public"));
 app.use(bodyParser.json());
 
-app.use("/login", login);
-app.use("/admin", admin);
-app.use("/drinks", drinks);
-app.use("/cocktails", cocktails);
-app.use("/slots", slots);
+app.use("/", router);
 
 const server = app.listen(PORT); //hosts server on localhost:3000
 const io = socket(server);
