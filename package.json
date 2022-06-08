@@ -1,0 +1,30 @@
+{
+    "name": "circlebar-firmware",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "nodemon src/app.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/raphaelMrci/circlebar-firmware.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/raphaelMrci/circlebar-firmware/issues"
+    },
+    "homepage": "https://github.com/raphaelMrci/circlebar-firmware#readme",
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "body-parser": "^1.20.0",
+        "dotenv": "^16.0.1",
+        "express": "^4.18.1",
+        "fs": "0.0.1-security",
+        "jsonwebtoken": "^8.5.1",
+        "mysql2": "^2.3.3",
+        "socket.io": "^4.5.1"
+    }
+}
