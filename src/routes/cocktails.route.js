@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const { authenticate } = require("../middleware/auth");
-const [
+const {
     getCocktails,
     newCocktail,
     editCocktail,
     deleteCocktail,
-] = require("../controllers/cocktails.controller");
+} = require("../controllers/cocktails.controller");
 
 router.get("/", authenticate, getCocktails);
 router.post("/", authenticate, newCocktail);

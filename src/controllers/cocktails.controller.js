@@ -21,7 +21,7 @@ function newCocktail(req, res) {
     db.query(
         "INSERT INTO cocktails (name, icon, recipe) VALUES (?, ?, ?)",
         [name, icon, recipe.stringify()],
-        (err, results) => {
+        (err) => {
             if (err) {
                 res.status(500).json({ msg: "Error adding cocktail" });
             } else {
