@@ -5,7 +5,7 @@ var PORT = process.env.PORT || 3000;
 const server = app.listen(PORT); //hosts server on localhost:3000
 const bodyParser = require("body-parser");
 
-const { login, admin, drinks } = require("./routes");
+const { login, admin, drinks, cocktails } = require("./routes");
 
 app.use(express.static("public"));
 app.use(bodyParser.json());
@@ -13,6 +13,7 @@ app.use(bodyParser.json());
 app.use("/login", login);
 app.use("/admin", admin);
 app.use("/drinks", drinks);
+app.use("/cocktails", cocktails);
 
 console.log("Server is running");
 
