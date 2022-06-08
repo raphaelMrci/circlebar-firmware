@@ -15,6 +15,11 @@ function editAdmin(req, res) {
     res.json({ msg: "Admin updated" });
 }
 
+function getAdmin(req, res) {
+    res.json(JSON.parse(fs.readFileSync("admin.json")));
+}
+
 module.exports = {
     editAdmin,
+    getAdmin,
 };
