@@ -1,11 +1,15 @@
 const express = require("express");
 const router = express.Router();
 
+const { getAvailableCocktails } = require("../controllers/root.controller");
+
 const admin = require("./admin.route");
 const login = require("./login.route");
 const drinks = require("./drinks.route");
 const cocktails = require("./cocktails.route");
 const slots = require("./slots.route");
+
+router.get("/", getAvailableCocktails);
 
 router.use("/login", login);
 router.use("/admin", admin);
