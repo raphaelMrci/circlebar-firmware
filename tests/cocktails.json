@@ -1,0 +1,30 @@
+[
+    {
+        "name": "mojito",
+        "icon": 2,
+        "recipe": [
+            {
+                "drink_id": 1,
+                "qty": 42
+            },
+            {
+                "drink_id": 5,
+                "qty": 888
+            }
+        ]
+    },
+    {
+        "name": "Cuba libre",
+        "icon": 3,
+        "recipe": [
+            {
+                "drink_id": 1,
+                "qty": 42
+            },
+            {
+                "drink_id": 2,
+                "qty": 888
+            }
+        ]
+    }
+]

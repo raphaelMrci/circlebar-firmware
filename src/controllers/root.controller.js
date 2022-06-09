@@ -15,7 +15,14 @@ function getAvailableCocktails(req, res) {
                 let isAvailable = true;
 
                 cocktail.recipe.forEach((drink) => {
-                    if (!slots.includes((slot) => slot.drink_id == drink.id)) {
+                    let isInStock = false;
+
+                    slots.forEach((slot) => {
+                        if (slot.drink_id == drink.drink_id) {
+                            isInStock = true;
+                        }
+                    });
+                    if (!isInStock) {
                         isAvailable = false;
                     }
                 });
@@ -23,9 +30,9 @@ function getAvailableCocktails(req, res) {
                     availableCocktails.push(cocktail);
                 }
             });
+            return res.status(200).json(availableCocktails);
         });
     });
-    res.json(availableCocktails);
 }
 
 module.exports = {

@@ -20,19 +20,20 @@ const io = socket(server);
 
 console.log("Server is running");
 
-var queue = [];
 var connected = 0;
 
-io.on("connection", (socket) => {
+const commandHandler = require("./handlers/command.handler");
+
+io.sockets.on("connection", (socket) => {
     console.log("New socket connection: " + socket.id);
     connected++;
 
-    socket.on("command", (args) => {
-        console.log(args);
-    });
+    socket.on("command", commandHandler);
 
-    socket.on("disconnect", () => {
-        console.log("User disconnected");
-        cpnnected--;
+    socket.on("disconnect", (socket) => {
+        console.log("User disconnected: " + socket.id);
+        connected--;
     });
 });
+
+// socket.broadcast.to(socketid).emit("command"); to send to an individual client
