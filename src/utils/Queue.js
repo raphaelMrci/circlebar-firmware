@@ -1,5 +1,7 @@
 class Queue {
     static queue = [];
+    static isWorking = false;
+    static waitingCup = false;
 
     static enqueue(element) {
         Queue.queue.push(element);

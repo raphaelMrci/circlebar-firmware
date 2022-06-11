@@ -10,6 +10,7 @@ const cocktails = require("./cocktails.route");
 const slots = require("./slots.route");
 
 router.get("/", getAvailableCocktails);
+router.get("/test", (req, res) => res.send("CIRCLEBAR"));
 
 router.use("/login", login);
 router.use("/admin", admin);

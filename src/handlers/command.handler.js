@@ -21,11 +21,11 @@ function commandHandler(msg) {
 
     db.query("SELECT * FROM slots", (err, slots) => {
         if (err) {
-            return res.status(500).json({ msg: "Error getting slots" });
+            return;
         }
         db.query("SELECT * FROM cocktails", (err, cocktails) => {
             if (err) {
-                return res.status(500).json({ msg: "Error getting cocktails" });
+                return;
             }
             cocktails.forEach((cocktail) => {
                 let isAvailable = true;
@@ -57,6 +57,7 @@ function commandHandler(msg) {
                 socket.emit("unavailable");
                 return;
             }
+            console.log(`Cocktail ${msg} added to queue`);
             Queue.enqueue({
                 socket_id: socket.id,
                 command_id: nCommand++,
@@ -65,6 +66,11 @@ function commandHandler(msg) {
             socket.emit("command", nCommand);
             if (nCommand >= 255) {
                 nCommand = 0;
+            }
+            if (!Queue.isWorking) {
+                Queue.isWorking = true;
+                socket.emit("ready");
+                console.log("First command: Waiting for user to be ready");
             }
         });
     });

@@ -3,6 +3,8 @@ const db = require("../config/db");
 function getAvailableCocktails(req, res) {
     var availableCocktails = [];
 
+    console.log("GET /");
+
     db.query("SELECT * FROM slots", (err, slots) => {
         if (err) {
             return res.status(500).json({ msg: "Error getting slots" });

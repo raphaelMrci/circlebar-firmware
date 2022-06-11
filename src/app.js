@@ -5,6 +5,12 @@ var PORT = process.env.PORT || 3000;
 const bodyParser = require("body-parser");
 
 const { initSlots } = require("./middleware/init");
+const commandHandler = require("./handlers/command.handler");
+const launchPreparation = require("./bartender/launchPreparation");
+
+const server = app.listen(PORT); //hosts server on localhost:3000
+server.maxConnections = 20;
+const io = socket(server);
 
 const router = require("./routes");
 
@@ -15,24 +21,16 @@ app.use(bodyParser.json());
 
 app.use("/", router);
 
-const server = app.listen(PORT); //hosts server on localhost:3000
-const io = socket(server);
-
 console.log("Server is running");
-
-var connected = 0;
-
-const commandHandler = require("./handlers/command.handler");
 
 io.sockets.on("connection", (socket) => {
     console.log("New socket connection: " + socket.id);
-    connected++;
 
     socket.on("command", commandHandler);
+    socket.on("ready", launchPreparation);
 
-    socket.on("disconnect", (socket) => {
+    socket.on("disconnect", () => {
         console.log("User disconnected: " + socket.id);
-        connected--;
     });
 });
 
