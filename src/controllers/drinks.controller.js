@@ -50,33 +50,43 @@ function editDrink(req, res) {
 }
 
 function deleteDrink(req, res) {
-    db.query(
-        "SELECT * FROM cocktails WHERE drink_id = ?",
-        [req.params.id],
-        (err, results) => {
-            if (err) {
-                res.status(500).json({ msg: "Error getting cocktails" });
-            } else if (results.length > 0) {
-                res.status(400).json({
-                    msg: "Cannot delete drink, it is used in a cocktail",
-                });
-            } else {
-                db.query(
-                    "DELETE FROM drinks WHERE id = ?",
-                    [req.params.id],
-                    (err, results) => {
-                        if (err) {
-                            res.status(500).json({
-                                msg: "Error deleting drink",
-                            });
-                        } else {
-                            res.json({ msg: "Drink deleted" });
-                        }
-                    }
-                );
-            }
+    console.log("DELETE /drinks/" + req.params.id);
+    db.query("SELECT * FROM cocktails", [], (err, cocktails) => {
+        if (err) {
+            console.log("Internal error: " + err);
+            res.status(500).json({ msg: "Error getting cocktails" });
+            return;
         }
-    );
+
+        var canBeDeleted = true;
+
+        cocktails.forEach((cocktail) => {
+            cocktail.recipe.forEach((drink) => {
+                if (drink.drink_id == req.params.id) {
+                    res.status(400).json({
+                        msg: "Cannot delete drink, it is used in a cocktail",
+                    });
+                    canBeDeleted = false;
+                }
+            });
+        });
+        if (canBeDeleted) {
+            db.query(
+                "DELETE FROM drinks WHERE id = ?",
+                [req.params.id],
+                (err, results) => {
+                    if (err) {
+                        res.status(500).json({
+                            msg: "Error deleting drink",
+                        });
+                    } else {
+                        console.log("Drink deleted");
+                        res.json({ msg: "Drink deleted" });
+                    }
+                }
+            );
+        }
+    });
 }
 
 module.exports = {
