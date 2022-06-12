@@ -8,6 +8,8 @@ const config = dotenv.config().parsed;
 function authenticate(req, res, next) {
     const authHeader = req.headers.authorization;
 
+    console.log("auhtentication");
+
     if (authHeader) {
         const token = authHeader.split(" ")[1];
 

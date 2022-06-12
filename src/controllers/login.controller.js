@@ -6,6 +6,8 @@ const jwt = require("jsonwebtoken");
 const config = dotenv.config().parsed;
 
 function login(req, res) {
+    console.log("POST /login");
+    console.log(req.body);
     var { username, password } = req.body;
     let admin_data = JSON.parse(fs.readFileSync("admin.json"));
 

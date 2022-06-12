@@ -1,6 +1,7 @@
 const db = require("../config/db");
 
 function getDrinks(req, res) {
+    console.log("GET /drinks");
     db.query("SELECT * FROM drinks", (err, results) => {
         if (err) {
             res.status(500).json({ msg: "Error getting drinks" });
