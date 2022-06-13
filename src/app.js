@@ -31,6 +31,7 @@ io.sockets.on("connection", (socket) => {
 
     socket.on("disconnect", () => {
         console.log("User disconnected: " + socket.id);
+        // TODO: remove user commands from queue
     });
 });
 

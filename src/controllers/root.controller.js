@@ -15,7 +15,6 @@ function getAvailableCocktails(req, res) {
             }
             cocktails.forEach((cocktail) => {
                 let isAvailable = true;
-
                 cocktail.recipe.forEach((drink) => {
                     let isInStock = false;
 
@@ -32,7 +31,7 @@ function getAvailableCocktails(req, res) {
                     availableCocktails.push(cocktail);
                 }
             });
-            return res.status(200).json(availableCocktails);
+            return res.json(availableCocktails);
         });
     });
 }

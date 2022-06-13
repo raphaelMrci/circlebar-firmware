@@ -62,7 +62,7 @@ function deleteDrink(req, res) {
 
         cocktails.forEach((cocktail) => {
             cocktail.recipe.forEach((drink) => {
-                if (drink.drink_id == req.params.id) {
+                if (drink.drink_id == req.params.id && canBeDeleted) {
                     res.status(400).json({
                         msg: "Cannot delete drink, it is used in a cocktail",
                     });
