@@ -1,5 +1,6 @@
 const db = require("../config/db");
 const Queue = require("../utils/Queue");
+const { startNewCommand, cancelCommand } = require("../middleware/commands");
 
 var nCommand = 0;
 
@@ -72,10 +73,7 @@ function commandHandler(msg) {
                 nCommand = 0;
             }
             if (!Queue.isWorking) {
-                Queue.isWorking = true;
-                Queue.waitingCup = true;
-                socket.emit("ready");
-                console.log("First command: Waiting for user to be ready");
+                startNewCommand(socket);
             }
         });
     });

@@ -1,4 +1,3 @@
-const { waitCupRemoved } = require("./waitCup");
 const Queue = require("../utils/Queue");
 
 async function prepareCocktail(socket) {

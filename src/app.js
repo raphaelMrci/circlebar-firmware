@@ -14,6 +14,8 @@ server.maxConnections = 20;
 const io = socket(server);
 
 const router = require("./routes");
+const Queue = require("./utils/Queue");
+const { startNewCommand, cancelCommand } = require("./middleware/commands");
 
 initSlots();
 
@@ -33,6 +35,11 @@ io.sockets.on("connection", (socket) => {
 
     socket.on("disconnect", () => {
         console.log("User disconnected: " + socket.id);
+        Queue.queue.forEach((item, index) => {
+            if (item.socket_id == socket.id) {
+                cancelCommand(index, io);
+            }
+        });
         // TODO: remove user commands from queue
     });
 });
