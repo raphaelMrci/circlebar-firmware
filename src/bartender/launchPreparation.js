@@ -13,24 +13,16 @@ async function prepareCocktail(socket) {
 function launchPreparation() {
     var socket = this;
 
-    if (Queue.queue[0].socket_id != socket.id) {
+    if (Queue.queue[0].socket_id != socket.id || !Queue.waitingCup) {
         socket.emit("unauthorized");
         return;
     }
+    Queue.waitingCup = false;
     socket.emit("preparing");
     prepareCocktail(socket).then(() => {
         console.log("Preparation finished");
         socket.emit("get-cup");
-        waitCupRemoved().then(() => {
-            console.log("Cup removed");
-            socket.emit("finished");
-            Queue.dequeue();
-            if (Queue.queue.length > 0) {
-                socket.broadcast.to(Queue.queue[0].socket_id).emit("ready");
-            } else {
-                Queue.isWorking = false;
-            }
-        });
+        Queue.waitRemovingCup = true;
     });
 }
 

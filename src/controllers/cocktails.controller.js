@@ -34,6 +34,8 @@ function newCocktail(req, res) {
 function editCocktail(req, res) {
     var { name, icon, recipe } = req.body;
 
+    console.log("PUT /COCKTAILS");
+
     if (!name || !icon || !recipe) {
         return res
             .status(400)

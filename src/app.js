@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 const { initSlots } = require("./middleware/init");
 const commandHandler = require("./handlers/command.handler");
 const launchPreparation = require("./bartender/launchPreparation");
+const cupRemoved = require("./handlers/cupRemoved.handler");
 
 const server = app.listen(PORT); //hosts server on localhost:3000
 server.maxConnections = 20;
@@ -28,6 +29,7 @@ io.sockets.on("connection", (socket) => {
 
     socket.on("command", commandHandler);
     socket.on("ready", launchPreparation);
+    socket.on("removed", cupRemoved);
 
     socket.on("disconnect", () => {
         console.log("User disconnected: " + socket.id);

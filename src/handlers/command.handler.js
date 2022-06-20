@@ -14,6 +14,10 @@ function commandHandler(msg) {
             isAlreadyCommand = true;
         }
     });
+    if (Queue.queue[0] && Queue.queue[0].socket_id == socket.id) {
+        socket.emit("ready");
+        return;
+    }
     if (isAlreadyCommand) {
         socket.emit("unauthorized");
         return;
@@ -69,6 +73,7 @@ function commandHandler(msg) {
             }
             if (!Queue.isWorking) {
                 Queue.isWorking = true;
+                Queue.waitingCup = true;
                 socket.emit("ready");
                 console.log("First command: Waiting for user to be ready");
             }
