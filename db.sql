@@ -1,7 +1,14 @@
+CREATE DATABASE  IF NOT EXISTS `circlebar`;
+USE `circlebar`;
 
---
--- Table structure for table `cocktails`
---
+DROP TABLE IF EXISTS `drinks`;
+CREATE TABLE `drinks` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` tinytext NOT NULL,
+  `icon` int unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 
 DROP TABLE IF EXISTS `cocktails`;
 CREATE TABLE `cocktails` (
@@ -11,27 +18,11 @@ CREATE TABLE `cocktails` (
   `recipe` json NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Table structure for table `drinks`
---
-
-DROP TABLE IF EXISTS `drinks`;
-CREATE TABLE `drinks` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` tinytext NOT NULL,
-  `icon` int unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Table structure for table `slots`
---
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `slots`;
 CREATE TABLE `slots` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL,
   `drink_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `drink_id_idx` (`drink_id`),
