@@ -3,7 +3,10 @@ const Queue = require("../utils/Queue");
 function cupRemoved() {
     var socket = this;
 
-    if (Queue.queue[0].socket_id != socket.id || !Queue.waitRemovingCup) {
+    if (
+        (Queue.size() > 0 && Queue.queue[0].socket_id != socket.id) ||
+        !Queue.waitRemovingCup
+    ) {
         socket.emit("unauthorized");
         return;
     }
