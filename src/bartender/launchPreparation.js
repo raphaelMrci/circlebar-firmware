@@ -1,10 +1,10 @@
 const Queue = require("../utils/Queue");
 const db = require("../config/db");
+const Pumps = require("./initGpio");
 
 const prepareCocktail = (index, recipe) => {
     return new Promise((resolve) => {
         if (index < recipe.length) {
-            // TODO: Start corresponding pump 'recipe[index].id'
             db.query(
                 "SELECT * FROM slots WHERE drink_id = ?",
                 [recipe[index].drink_id],
@@ -13,8 +13,9 @@ const prepareCocktail = (index, recipe) => {
                         return;
                     }
                     console.log(slots[0]);
+                    Pumps[slots[0].id - 1].writeSync(1);
                     setTimeout(() => {
-                        // TODO: Stop corresponding pump
+                        Pumps[slots[0].id - 1].writeSync(0);
                         return resolve(prepareCocktail(++index, recipe));
                     }, recipe[index].qty);
                 }
@@ -40,7 +41,7 @@ function launchPreparation() {
                 return;
             }
             var cocktail = cocktails[0];
-            var recipe = cocktail.recipe;
+            var recipe = JSON.parse(cocktail.recipe);
             prepareCocktail(0, recipe).then(() => {
                 console.log("Preparation finished");
                 socket.emit("get-cup");

@@ -7,7 +7,7 @@ CREATE TABLE `drinks` (
   `name` tinytext NOT NULL,
   `icon` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16;
 
 
 DROP TABLE IF EXISTS `cocktails`;
@@ -18,7 +18,7 @@ CREATE TABLE `cocktails` (
   `recipe` json NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9;
 
 DROP TABLE IF EXISTS `slots`;
 CREATE TABLE `slots` (
@@ -27,4 +27,4 @@ CREATE TABLE `slots` (
   PRIMARY KEY (`id`),
   KEY `drink_id_idx` (`drink_id`),
   CONSTRAINT `drink_id` FOREIGN KEY (`drink_id`) REFERENCES `drinks` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB;

@@ -5,6 +5,9 @@ function getCocktails(req, res) {
         if (err) {
             res.status(500).json({ msg: "Error getting cocktails" });
         } else {
+            results.forEach((cocktail) => {
+                cocktail.recipe = JSON.parse(cocktail.recipe);
+            });
             res.json(results);
         }
     });
